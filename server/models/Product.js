@@ -26,16 +26,15 @@ const ProductSchema = new mongoose.Schema(
     },
     minQuantity: {
       type: Number,
-      required: true,
     },
     reorderPoint: {
       type: Number,
-      required: true,
     },
     maxQuantity: {
       type: Number,
     },
     supplierId: String,
+    status: String,
     category: {
       type: String,
       required: true,

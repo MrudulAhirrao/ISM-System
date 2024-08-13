@@ -14,6 +14,7 @@ export const createProduct = async (req, res) => {
       reorderPoint,
       maxQuantity,
       category,
+      status,
     } = req.body;
     const user = await User.findById(userId);
 
@@ -27,6 +28,7 @@ export const createProduct = async (req, res) => {
       reorderPoint,
       maxQuantity,
       supplierId: user.supplierId,
+      status,
       category,
     });
     await newProduct.save();
