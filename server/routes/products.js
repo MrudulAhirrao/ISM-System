@@ -5,6 +5,8 @@ import {
   getProductDetails,
   deleteProduct,
   updateProduct,
+  getBookedProducts,
+  BookProduct,
 } from "../controllers/products.js";
 import { verifyToken } from "../middleware/auth.js";
 
@@ -14,10 +16,11 @@ const router = express.Router();
 router.get("/", getFeedProducts);
 router.get("/:userId/products", getUserProducts);
 router.get("/:productId/product", getProductDetails);
+router.get("/:userId/bookedproducts", getBookedProducts);
 
 /*UPDATE*/
-// router.patch("/:id/like", verifyToken, likeProduct);
 router.patch("/:productId/update", verifyToken, updateProduct); // Define the update route
+router.patch("/:id/booking", verifyToken, BookProduct);
 
 /* DELETE */
 router.delete("/:userId/:productId/delete", verifyToken, deleteProduct);

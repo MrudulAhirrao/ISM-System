@@ -190,30 +190,6 @@ export const getUserProducts = async (req, res) => {
   }
 };
 
-/*UPDATE*/
-
-// export const likeProduct = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const { userId } = req.body;
-//     const product = await Product.findById(id);
-//     const isLiked = product.likes.get(userId);
-
-//     if (isLiked) {
-//       product.likes.delete(userId);
-//     } else {
-//       product.likes.set(userId, true);
-//     }
-//     const updatedProduct= await Product.findByIdAndUpdate(
-//       id,
-//       { likes: product.likes },
-//       { new: true }
-//     );
-//     res.status(200).json(updatedProduct);
-//   } catch (err) {
-//     res.status(404).json({ message: err.message });
-//   }
-// };
 /*DELETE*/
 export const deleteProduct = async (req, res) => {
   try {
@@ -269,6 +245,106 @@ export const updateProduct = async (req, res) => {
     res
       .status(200)
       .json({ message: "Product details updated successfully", product });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+/* UPDATE */
+
+export const BookProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { userId } = req.body;
+    const product = await Product.findById(id);
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    product.bookings.set(userId, true);
+
+    const updatedProduct = await Product.findByIdAndUpdate(
+      id,
+      { bookings: product.bookings },
+      { new: true }
+    );
+
+    res.status(200).json(updatedProduct);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+export const getBookedProducts = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const page = parseInt(req.query.page, 10) - 1 || 0;
+    const limit = parseInt(req.query.limit, 10) || 5;
+    const search = req.query.search || "";
+    let sort = req.query.sort || "quantity";
+    let category = req.query.category || "All";
+    let status = req.query.status || "All";
+    let name = req.query.name || "";
+
+    // Fetch distinct themes from the database
+    const categoryOptions = await Product.distinct("category");
+    const statusOptions = await Product.distinct("status");
+    // If theme is "All", include all theme options, otherwise split the provided theme string
+    category === "All"
+      ? (category = [...categoryOptions])
+      : (category = req.query.category.split(","));
+
+    status === "All"
+      ? (status = [...statusOptions])
+      : (status = req.query.status.split(","));
+
+    // Split and parse the sort parameter
+    req.query.sort ? (sort = req.query.sort.split(",")) : (sort = [sort]);
+    let sortBy = {};
+    if (sort[1]) {
+      sortBy[sort[0]] = sort[1];
+    } else {
+      sortBy[sort[0]] = "asc";
+    }
+    // Construct the filter object for MongoDB query
+    let filter = {
+      [`bookings.${userId}`]: true, // Check if userId exists in the bookings map
+    };
+
+    if (category.length > 0) {
+      filter.category = { $in: category };
+    }
+    if (status) {
+      filter.status = { $in: status };
+    }
+    // Add name filter if name is provided
+    if (name) {
+      filter.name = { $regex: name, $options: "i" };
+    }
+
+    // Query products with search, theme filter, sorting, pagination
+    const products = await Product.find(filter)
+      .sort(sortBy)
+      .skip(page * limit)
+      .limit(limit);
+
+    // Count total matching documents for pagination
+    const total = await Product.countDocuments(filter);
+
+    // Prepare response object
+    const response = {
+      error: false,
+      total,
+      page: page + 1,
+      limit,
+      category: categoryOptions,
+      status: statusOptions,
+      products,
+    };
+
+    res.status(200).json(response);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
