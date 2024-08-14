@@ -263,7 +263,15 @@ export const BookProduct = async (req, res) => {
       return res.status(404).json({ message: "Product not found" });
     }
 
-    product.bookings.set(userId, true);
+    const isBooked = product.bookings.get(userId);
+
+    if (isBooked) {
+      // User is already booked, so remove the booking
+      product.bookings.delete(userId);
+    } else {
+      // User is not booked, so add the booking
+      product.bookings.set(userId, true);
+    }
 
     const updatedProduct = await Product.findByIdAndUpdate(
       id,

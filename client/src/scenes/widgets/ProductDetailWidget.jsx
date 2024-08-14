@@ -236,7 +236,8 @@ console.log(productId);
 
           </Box>
          
-          {role === "employee" && (
+          { (role === "employee" && status == "Marketplace"
+          ) && (
             <>
               <FlexBetween gap="0.3rem" mt={"1rem"}>
               <Button  onClick={patchProduct} variant={isBooked? "contained": "outlined"} color={isBooked? "error": "primary"}>
@@ -246,26 +247,31 @@ console.log(productId);
             </>  
           )}
 
-      <Box style={{
-                    borderRadius: "2rem",
-                    padding: "0.5rem 1rem",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    overflow: "hidden",
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                }} >
-                    <Box display={isNonMobileScreens? "flex" : "block"}>
-                    <Typography color="white" variant="subtitle1" ml={"0.3rem"}  >
-                    Orders for this Product :
-                    </Typography>
-                    <Typography ml={"0.5rem"} color={"white"} variant="h9" fontSize={isNonMobileScreens? "1.2rem" : "1rem"} textAlign={"center"} fontWeight={"bold"}>
-                      {bookingCount}
-                  </Typography>
-                    </Box>
-            </Box>
+{ (role === "employee" && status == "Marketplace"
+          ) && (
 
+            <Box style={{
+              borderRadius: "2rem",
+              padding: "0.5rem 1rem",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
+          }} >
+              <Box display={isNonMobileScreens? "flex" : "block"}>
+              <Typography color="white" variant="subtitle1" ml={"0.3rem"}  >
+              Orders for this Product :
+              </Typography>
+              <Typography ml={"0.5rem"} color={"white"} variant="h9" fontSize={isNonMobileScreens? "1.2rem" : "1rem"} textAlign={"center"} fontWeight={"bold"}>
+                {bookingCount}
+            </Typography>
+              </Box>
+      </Box>
+
+           )}
+     
 
         </WidgetWrapper>
          
