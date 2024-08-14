@@ -3,9 +3,9 @@ import Navbar from '../navbar'
 import { Box , useMediaQuery,useTheme} from '@mui/material'
 import { useSelector } from 'react-redux'
 import UserWidget from '../widgets/UserWidget'
-import ProductsWidget from '../widgets/ProductsWidget'
 import { Link } from 'react-router-dom'
 import {Button} from '@mui/material'
+import ProductsWidget from '../widgets/ProductsWidget'
 
 
 const HomePage = () => {
@@ -31,7 +31,7 @@ const HomePage = () => {
             flexBasis={isNonMobileScreens ? "42%" : undefined}
             mt={isNonMobileScreens ? undefined : "2rem"}
             >
-          <Link to="/supplier/myproduct" >
+          <Link to="/myproduct" >
         <Button 
          variant="outlined"
          size="large"
@@ -59,11 +59,22 @@ const HomePage = () => {
             flexBasis={isNonMobileScreens ? "42%" : undefined}
             mt={isNonMobileScreens ? undefined : "2rem"}
             >
+              <Link to="/myproduct" >
+        <Button 
+         variant="outlined"
+         size="large"
+         color='primary'
+         // Adjust size here
+        >
+          Add Product 
+        </Button>
+      </Link>
             <ProductsWidget userId={_id} ></ProductsWidget>
             </Box>
           )}
       </Box>
     </Box>
+    
   )
 }
 

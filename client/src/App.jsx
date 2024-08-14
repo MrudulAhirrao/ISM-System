@@ -8,9 +8,10 @@ import { themeSettings } from "./theme";
 import LoginPage from "./scenes/loginPage";
 import HomePage from "./scenes/homePage";
 import ProfilePage from "./scenes/profilePage";
-import ProductDetail from "./scenes/productDetailPage";
+// import ProductDetail from "./scenes/productDetailPage";
 import ProductListing from "./scenes/ProductListingPage";
 import MyProductPage from "./scenes/myProductPage";
+import ProductDetail from "./scenes/productDetailPage";
 
 function App() {
   const mode = useSelector((state) => state.mode);
@@ -37,7 +38,7 @@ function App() {
             element={isAuth ? <ProductListing></ProductListing> : <Navigate to="/" />}
           ></Route>
           <Route
-            path="/orderedproducts"
+            path="/myproduct"
             element={isAuth ? <MyProductPage></MyProductPage> : <Navigate to="/" />}
           ></Route>
            <Route

@@ -12,6 +12,7 @@ export const register = async (req, res) => {
       email,
       password,
       picturePath,
+      location,
       role,
       employeeId,
       supplierId,

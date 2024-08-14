@@ -9,7 +9,6 @@ const ProductSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
-      min: 2,
       max: 100,
     },
     description: {
@@ -33,7 +32,7 @@ const ProductSchema = new mongoose.Schema(
     maxQuantity: {
       type: Number,
     },
-    supplierId: String,
+
     status: String,
     category: {
       type: String,

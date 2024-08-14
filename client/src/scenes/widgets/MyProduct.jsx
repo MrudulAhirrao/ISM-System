@@ -1,18 +1,21 @@
 import {
-    EventSeat,
-    DirectionsCar,
-    AddLocation,
-    PersonPinCircle
+    Label,
+    Description,
+    ProductionQuantityLimits,
+    MonetizationOn,
+    LineWeight,
+    MonitorWeight,
+    Scale,
+    CategoryOutlined
 } from "@mui/icons-material";
-import { Box, Divider, Typography, InputBase, useTheme, Button ,  useMediaQuery, TextField } from "@mui/material";
+import { Box, Divider, Typography, useTheme, Button ,  useMediaQuery, TextField, Select, MenuItem } from "@mui/material";
 
 import UserImage from "../../components/UserImage";
 import WidgetWrapper from "../../components/WidgetWrapper";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setProducts } from "../../state";
 import FlexBetween from "../../components/FlexBetween";
-import { LocationOn } from "@mui/icons-material";
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
@@ -29,7 +32,6 @@ const MyProductWidget = ({picturePath}) => {
     const[reorderPoint, setReorderPoint] = useState("");
     const[category, setCategory] = useState("");
     const [status , setStatus] = useState("");
-    const {palette} = useTheme();
     const {_id} = useSelector((state)=> state.user);
     const Role = useSelector((state)=> state.user.role);
     const token = useSelector((state)=> state.token);
@@ -43,7 +45,7 @@ const MyProductWidget = ({picturePath}) => {
     
  
 
-    const handleSnackbarClose = (product, reason) => {
+    const handleSnackbarClose = (event, reason) => {
       if (reason === 'clickaway') {
         return;
       }
@@ -51,126 +53,117 @@ const MyProductWidget = ({picturePath}) => {
       setOpenSnackbar(false);
     };
     
-    const handleProduct = async() =>{
+    const handleProduct = async() => {
       
-        const formData = new FormData();
-        formData.append("userId", _id);
-        formData.append("name", name);
-        formData.append("description", description);
-        formData.append("price", price);
-        formData.append("quantity", quantity);
-        formData.append("minQuantity", minQuantity);
-        formData.append("reorderPoint", reorderPoint);
-        formData.append("maxQuantity", maxQuantity);
-        formData.append("category", category);
-        formData.append("status", status);
-
-
-       
-        const response = await fetch(`http://localhost:3001/products`,{
-            method: "POST",
-            headers: {Authorization: `Bearer ${token}`},
-            body: formData
-        });
-        const products = await response.json();
-        dispatch(setProducts({products}));
-        setPrice("");
-        setCategory("");
-        setMaxQuantity("");
-        setMinQuantity("");
-        setName("");
-        setDescription("");
-        setReorderPoint("");
-        setQuantity("");
-        setStatus("");
-        handleSnackbarOpen();
-
-    }
-   
-    { Role == "employee" ? (
-        setStatus("Registered")
-    ) :(
-     setStatus("Marketplace")
-    )}
+      const formData = new FormData();
+      formData.append("userId", _id); // Ensure _id is not undefined
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("price", price);
+      formData.append("quantity", quantity);
+      formData.append("minQuantity", minQuantity);
+      formData.append("reorderPoint", reorderPoint);
+      formData.append("maxQuantity", maxQuantity);
+      formData.append("status", status);
+      formData.append("category", category);
   
+      const response = await fetch(`http://localhost:3001/products`, {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` }, // Ensure token is valid
+          body: formData
+      });
+  
+      const products = await response.json();
+  
+      // Check if products were successfully returned
+      if (response.ok) {
+          dispatch(setProducts({ products }));
+          setPrice("");
+          setCategory("");
+          setMaxQuantity("");
+          setMinQuantity("");
+          setName("");
+          setDescription("");
+          setReorderPoint("");
+          setQuantity("");
+          setStatus("");
+          handleSnackbarOpen();
+      } else {
+          console.error("Product creation failed", products);
+      }
+  }
+  
+   
+    const categories = [
+      "Electronics",
+      "Clothing and Apparel",
+      "Home and Kitchen",
+      "Groceries and Food Items",
+      "Health and Personal Care",
+      "Automotive",
+      "Sports and Outdoors",
+      "Toys and Games",
+  ];
+  
+    useEffect(() => {
+      if (Role === "employee") {
+        setStatus("Registered");
+      } else {
+        setStatus("Marketplace");
+      }
+    }, [Role]);
+
+    console.log(name,category,price,quantity);
   return (
     <WidgetWrapper width={isNonMobileScreens? "50%" : "100%"}>
     <Box display={"flex"} justifyContent="center" alignItems="center" gap={5}  >
         <UserImage image={picturePath}></UserImage>
-        <Typography  fontSize={"3rem"} color={"#834bff"}>Product Form</Typography>
+        {Role == 'employee' ? (
+        <Typography  fontSize={"3rem"} color={"primary"}>Product Form</Typography>
+        ):(
+          <Typography  fontSize={"3rem"} color={"#834bff"}>Product Form</Typography>  
+        )}
     </Box>
    
-    <Box mt={2} display="flex" alignItems="center"  marginBottom="1rem" >
-    <Box
-      sx={{
-        backgroundColor: '#834bff',
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: '50%',
-        padding: '0.5rem',
-      }}
-    >
-            <EventSeat  fontSize="large" />
+  
+<Box display="flex" alignItems="center" marginBottom="1rem" marginTop={"2rem"}>
+        <Box
+    >       <Label color={Role=='employee' ? 'primary' : "#834bff"} fontSize="large" />
+
     </Box>
-      <InputBase
+      <TextField
       multiline
-        placeholder="write down name of product"
+      fullWidth
+      label="Name of Product"
+       
         onChange={(e) => setName(e.target.value)}
         value={name}
-        sx={{
-          width: '100%',
-          backgroundColor: palette.neutral.light,
-          borderRadius: '2rem',
-          padding: '1rem 2rem',
-          marginLeft: '1rem', // Add margin to create space between the icon and the input
+        sx={{ marginLeft: '1rem' }}
 
-        }}
-        
+
       />
     </Box>
 
-    <Box mt={2} display="flex" alignItems="center"  marginBottom="1rem" >
-    <Box
-      sx={{
-        backgroundColor: '#834bff',
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: '50%',
-        padding: '0.5rem',
-      }}
-    >
-            <DirectionsCar color="#834bff" fontSize="large" />
+ 
+<Box display="flex" alignItems="center" marginBottom="1rem">
+        <Box> 
+          <Description color={Role == 'supplier' ? "#834bff" : 'primary'} fontSize="large" />
     </Box>
-
-      <InputBase
+      <TextField
       multiline
-        placeholder="write down description"
+      fullWidth
+      label="Description of Product"
         onChange={(e) => setDescription(e.target.value)}
         value={description}
-        sx={{
-          width: '100%',
-          backgroundColor: palette.neutral.light,
-          borderRadius: '2rem',
-          padding: '1rem 2rem',
-          marginLeft: '1rem', // Add margin to create space between the icon and the input
+        sx={{ marginLeft: '1rem' }}
 
-        }}
+
       />
     </Box>
     
         <Box display="flex" alignItems="center" marginBottom="1rem">
         <Box
-      sx={{
-        backgroundColor: '#834bff',
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: '50%',
-        padding: '0.5rem',
-      }}
-    >       <AddLocation color="#834bff" fontSize="large" />
+    >       <ProductionQuantityLimits color={Role == 'supplier' ? "#834bff" : 'primary'} fontSize="large" />
 
     </Box>
       <TextField
@@ -188,16 +181,8 @@ const MyProductWidget = ({picturePath}) => {
     
     <Box display="flex" alignItems="center" marginBottom="1rem">
     <Box
-      sx={{
-        backgroundColor: '#834bff',
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: '50%',
-        padding: '0.5rem',
-      }}
-    >
-            <LocationOn color="#834bff" fontSize="large" />
+    >       <MonetizationOn color={Role == 'supplier' ? "#834bff" : 'primary'} fontSize="large" />
+
 
     </Box>
       <TextField
@@ -215,16 +200,8 @@ const MyProductWidget = ({picturePath}) => {
          {Role == 'employee' && (
             <Box display="flex" alignItems="center" marginBottom="1rem">
             <Box
-              sx={{
-                backgroundColor: '#834bff',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderRadius: '50%',
-                padding: '0.5rem',
-              }}
-            >
-                <PersonPinCircle color="#834bff" fontSize="large" />
+    >       <MonitorWeight color={Role == 'supplier' ? "#834bff" : 'primary'} fontSize="large" />
+
         
             </Box>
           <TextField
@@ -242,17 +219,9 @@ const MyProductWidget = ({picturePath}) => {
 
 { Role == 'employee' && (
     <Box display="flex" alignItems="center" marginBottom="1rem">
-    <Box
-      sx={{
-        backgroundColor: '#834bff',
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: '50%',
-        padding: '0.5rem',
-      }}
-    >
-        <PersonPinCircle color="#834bff" fontSize="large" />
+   <Box
+    >       <LineWeight color={Role == 'supplier' ? "#834bff" : 'primary'} fontSize="large" />
+
 
     </Box>
   <TextField
@@ -271,16 +240,8 @@ const MyProductWidget = ({picturePath}) => {
 { Role == 'employee' && (
     <Box display="flex" alignItems="center" marginBottom="1rem">
     <Box
-      sx={{
-        backgroundColor: '#834bff',
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: '50%',
-        padding: '0.5rem',
-      }}
-    >
-        <PersonPinCircle color="#834bff" fontSize="large" />
+    >       <Scale color={Role == 'supplier' ? "#834bff" : 'primary'} fontSize="large" />
+
 
     </Box>
   <TextField
@@ -297,33 +258,36 @@ const MyProductWidget = ({picturePath}) => {
 
 
 
+   
 <Box display="flex" alignItems="center" marginBottom="1rem">
     <Box
-      sx={{
-        backgroundColor: '#834bff',
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: '50%',
-        padding: '0.5rem',
-      }}
+     
     >
-        <PersonPinCircle color="#834bff" fontSize="large" />
+              <CategoryOutlined color={Role == 'supplier' ? "#834bff" : 'primary'} fontSize="large" />
 
     </Box>
-  <TextField
-    fullWidth
-    multiline
-    label="Category"
-    value={category}
-    onChange={(e) => setCategory(e.target.value)}
-    sx={{ marginLeft: '1rem' }}
-    variant="outlined"
-    />
-</Box>
-
-   
-  
+        <Select
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          displayEmpty
+          inputProps={{ 'aria-label': 'Without label' }}
+          sx={{
+            width: '100%',
+            padding: '0.2rem ',
+            marginLeft: '1rem',
+            color: 'white',
+          }}
+        >
+          <MenuItem value="" disabled>
+            Select Product Category
+          </MenuItem>
+          {categories.map((category) => (
+            <MenuItem key={category} value={category}>
+              {category}
+            </MenuItem>
+          ))}
+        </Select>
+      </Box>
                   
 
     <Divider sx={{margin: "1.25rem 0"}}></Divider>
@@ -337,9 +301,8 @@ const MyProductWidget = ({picturePath}) => {
         <Button
           
           onClick={handleProduct}
+          variant="contained"
           sx={{
-            color: palette.background.alt,
-            backgroundColor: "#834bff",
             borderRadius: "3rem",
           }}
         >

@@ -1,24 +1,10 @@
-import {
-    ChatBubbleOutlineOutlined,
-    FavoriteBorderOutlined,
-    FavoriteOutlined,   
-    ShareOutlined,
-  } from "@mui/icons-material";
-  import LocalActivityIcon from '@mui/icons-material/LocalActivity';
-  import EventIcon from '@mui/icons-material/Event';
-  import { NavLink } from "react-router-dom";
-  import PlaceIcon from '@mui/icons-material/Place';
+
   import { useNavigate } from "react-router-dom";
-  import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
-  import FlexBetween from "../../components/FlexBetween";
+  import { Box,  Typography } from "@mui/material";
   import WidgetWrapper from "../../components/WidgetWrapper";
-  import { useState } from "react";
-  import {CardMedia} from '@mui/material';
   import {useMediaQuery} from "@mui/material";
-  import DeleteIcon from '@mui/icons-material/Delete';
   import { useDispatch, useSelector } from "react-redux";
-  import { setProduct, setRide } from "../../state";
-  import UserImage from "../../components/UserImage";
+  import { setProduct} from "../../state";
   import Button from '@mui/material/Button'; // Updated import
   
   const ProductWidget =({
@@ -174,7 +160,7 @@ import {
                   
                 
                  
-                  { productUserId === loggedInUserId && (
+                  { role === "employee" && (
                       <>
                       <Button 
                       size="small"
@@ -192,7 +178,7 @@ import {
                   
               </Box>
               <Box mt={3} >
-                  {role === "employee" ? (
+                  {role === "supplier" ? (
                       <Button 
                       variant="contained" 
                       style={{

@@ -17,7 +17,7 @@ export const createProduct = async (req, res) => {
       status,
     } = req.body;
     const user = await User.findById(userId);
-
+    console.log("inside try");
     const newProduct = new Product({
       userId,
       name,
@@ -27,11 +27,11 @@ export const createProduct = async (req, res) => {
       minQuantity,
       reorderPoint,
       maxQuantity,
-      supplierId: user.supplierId,
       status,
       category,
     });
     await newProduct.save();
+    console.log("Saved Product");
 
     const product = await Product.find(); //grabs all the Products and display it on frontend
     res.status(201).json(product);

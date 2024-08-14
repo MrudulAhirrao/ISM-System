@@ -86,7 +86,7 @@ import {
         <FlexBetween
           gap="0.5rem"
           pb="1.1rem"
-          onClick={ Role === "visitor" ? () => navigate(`/visitor/${userId}`) : ""}
+          onClick={ Role === "employee" ? () => navigate(`/employee/${userId}`) : ""}
         >
           <FlexBetween gap="1rem">
             <UserImage image={picturePath} />

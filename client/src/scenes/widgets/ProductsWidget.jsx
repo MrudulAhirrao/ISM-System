@@ -8,6 +8,7 @@ import Category from "../../components/Category";
 import {useMediaQuery} from "@mui/material";
 import { Box } from "@mui/material";
 import CustomPagination from "../../components/CustomPagination";
+import ProductWidget from "./ProductWidget";
 
 
 const ProductsWidget = ({ userId, isProfile = false  }) => {
@@ -84,7 +85,7 @@ const ProductsWidget = ({ userId, isProfile = false  }) => {
   const handleSortChange = (newSort) => {
     setSort(newSort);
     setPage(1); // Reset page to 1 when sorting changes
-    localStorage.setItem("rideSort", JSON.stringify(newSort));
+    localStorage.setItem("productSort", JSON.stringify(newSort));
   };
 
   const handleFilterCategoryChange = (newFilterCategory) => {
@@ -102,7 +103,7 @@ const ProductsWidget = ({ userId, isProfile = false  }) => {
 
   const handlePageChange = (newPage) => {
     setPage(newPage);
-    localStorage.setItem("ridePage", newPage);
+    localStorage.setItem("productPage", newPage);
    
   };
 
@@ -179,14 +180,14 @@ const ProductsWidget = ({ userId, isProfile = false  }) => {
 
          
         </Box>
-      { Role === "employee" ? (
+      { Role === "supplier" ? (
           <Typography mt={"1rem"} fontSize={isNonMobile? "3rem" : "1rem"} color={"#834bff"} > Your Products </Typography>
       ):(
-        <Typography mt={"1rem"} fontSize={isNonMobile? "3rem" : "1rem"} color={"primary"} > Rides For You </Typography>
+        <Typography mt={"1rem"} fontSize={isNonMobile? "3rem" : "1rem"} color={"primary"} > Products in Inventory </Typography>
       )}
 
       </Box>
-      {/* Ride Listings */}
+      {/* Product Listings */}
       <Box>
         {Array.isArray(products.products) &&
           products.products.map(
@@ -204,7 +205,7 @@ const ProductsWidget = ({ userId, isProfile = false  }) => {
               category,
               status
             }) => (
-              <ProductsWidget
+              <ProductWidget
                 key={_id}
                 productId={_id}
                 productUserId={userId}

@@ -48,7 +48,7 @@ const Navbar = () => {
         <Typography
           fontWeight="bold"
           fontSize="clamp(1rem, 2rem, 2.25rem)"
-          color={Role === "visitor" ? "primary" : "#834bff"}
+          color={Role === "employee" ? "primary" : "#834bff"}
           onClick={() => navigate("/home")}
           sx={{
             "&:hover": {
