@@ -19,7 +19,8 @@
     maxQuantity,
     supplierId,
     status,
-    category,           
+    category,  
+    bookings         
   })=>{
       
       const dispatch = useDispatch();
@@ -28,7 +29,8 @@
       const navigate = useNavigate();
       const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
       const {role} = useSelector((state)=> state.user);
-  
+      const bookingCount = Object.keys(bookings).length;
+
       
   
       const deleteProduct = async () => {
@@ -54,6 +56,8 @@
               <Box display="flex" flexDirection="row" alignItems="center">
                   <Box display={"block"} justifyContent="space-between" alignItems="center" width="100%" mt={"1rem"} gap={  1 }>
                  
+                
+               
                   <Box display={"block"}  >
   
                   <Box style={{
@@ -189,7 +193,26 @@
               <Box display="flex" justifyContent="space-between" mt="1rem" gap={2}>
                   
                 
-                 
+              {(role === "supplier" && bookingCount > 0) && (
+                    
+                    <Box sx={{
+                        borderRadius: "2rem",
+                        bgcolor: "#834bff",
+                        padding: "0.5rem 1rem",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        overflow: "hidden",
+                        border:"0.1rem solid  #1E1E1E",
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
+                        boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
+                    }}>
+                        <Typography color="white" variant="subtitle1">
+                        {bookingCount}  Bookings
+                        </Typography>
+                    </Box>
+                    )}
                   { (role == "employee" || loggedInUserId == productUserId )&& (
                       <>
                       <Button 

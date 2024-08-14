@@ -11,7 +11,7 @@ import CustomPagination from "../../components/CustomPagination";
 import ProductWidget from "./ProductWidget";
 import Status from "../../components/Status"
 
-const ProductsWidget = ({ userId, isProfile = false  }) => {
+const ProductsWidget = ({ userId, isProfile = false , isBookedProducts=false }) => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
   const token = useSelector((state) => state.token);
@@ -75,11 +75,26 @@ const ProductsWidget = ({ userId, isProfile = false  }) => {
       dispatch(setProducts({ products: data }));
     };
 
-    
+    const getBookedProducts = async () => {
+      const filterCategoryString = filterCategory.join(",");
+
+      const response = await fetch(
+        `http://localhost:3001/products/${userId}/bookedproducts?page=${page}&sort=${sort.sort},${sort.order}&category=${filterCategoryString}&search=${search}&name=${filterName}`,
+        {
+          method: "GET",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      const data = await response.json();
+      dispatch(setProducts({ products: data }));
+    };
+
     if (isProfile) {
       getUserProducts();
       
-    } 
+    } else if(isBookedProducts){
+      getBookedProducts();
+    }
      else {
       getProducts();
     }
@@ -166,7 +181,7 @@ const ProductsWidget = ({ userId, isProfile = false  }) => {
           setFilterCategory={handleFilterCategoryChange}
         />
         </Box>
-        {Role == 'employee' && (
+        {(Role == 'employee' && !isBookedProducts) && (
           <Box mt={2}>
           <Status
             filterStatus={filterStatus}
@@ -201,11 +216,11 @@ const ProductsWidget = ({ userId, isProfile = false  }) => {
 
          
         </Box>
-      { Role === "supplier" ? (
-          <Typography mt={"1rem"} fontSize={isNonMobile? "3rem" : "1rem"} color={"#834bff"} > Your Products </Typography>
-      ):(
-        <Typography mt={"1rem"} fontSize={isNonMobile? "3rem" : "1rem"} color={"primary"} > Products in Inventory </Typography>
-      )}
+        {!isBookedProducts && (
+    <Typography mt={"1rem"} fontSize={isNonMobile ? "3rem" : "1rem"} color={Role === "supplier" ? "#834bff" : "primary"}>
+        {Role === "supplier" ? "Your Products" : "Products in Inventory"}
+    </Typography>
+)}
 
       </Box>
       {/* Product Listings */}
@@ -223,7 +238,8 @@ const ProductsWidget = ({ userId, isProfile = false  }) => {
               reorderPoint,
               maxQuantity,
               category,
-              status
+              status,
+              bookings
             }) => (
               <ProductWidget
                 key={_id}
@@ -238,6 +254,7 @@ const ProductsWidget = ({ userId, isProfile = false  }) => {
                 maxQuantity={maxQuantity}
                 status={status}
                 category={category}
+                bookings={bookings}
               />
             )
           )}

@@ -29,6 +29,7 @@ export const createProduct = async (req, res) => {
       maxQuantity,
       status,
       category,
+      bookings: {},
     });
     await newProduct.save();
     console.log("Saved Product");

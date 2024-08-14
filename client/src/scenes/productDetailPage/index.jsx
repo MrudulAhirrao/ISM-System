@@ -34,7 +34,7 @@ const ProductDetail = () => {
       <Box>
         {currentProduct && (
           <ProductDetailWidget
-            proudctId={currentProduct._id}
+            productId={currentProduct._id}
             productUserId={currentProduct.userId}
             name={currentProduct.name}
             description={currentProduct.description}
@@ -45,6 +45,7 @@ const ProductDetail = () => {
             maxQuantity={currentProduct.maxQuantity}
             status={currentProduct.status}
             category={currentProduct.category}
+            bookings={currentProduct.bookings}
           />
         )}
       </Box>
