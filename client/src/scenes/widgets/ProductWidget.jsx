@@ -133,34 +133,64 @@
                       
                       
                   </Box>
-                  <Box style={{
-                      borderRadius: "2rem",
-                      padding: "0.5rem 1rem",
-                      display: "inline-flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      overflow: "hidden",
-                      whiteSpace: "nowrap",
-                      textOverflow: "ellipsis",
-                  }} >
-                      <Box display={isNonMobileScreens? "flex" : "block"}>
-                      <Typography color="white" variant="subtitle1" ml={"0.3rem"}  >
-                        Reorder Point : 
-                      </Typography>
-                      <Typography ml={"0.5rem"} color={"white"} variant="h9" fontSize={isNonMobileScreens? "1.2rem" : "1rem"} textAlign={"center"} fontWeight={"bold"}>
-                        {reorderPoint}
+
+                    {role == 'employee' && (
+                    <Box
+                                        
+                    style={{
+                    borderRadius: "2rem",
+                    padding: "0.5rem 1rem",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis",
+                    }} >
+                    
+                    <Typography color="white" variant="subtitle1" ml={"0.3rem"}  >
+                    Status : 
                     </Typography>
-                      </Box>
-                      
+                    <Typography ml={"0.5rem"} color={"white"} variant="h9" fontSize={isNonMobileScreens? "1.2rem" : "1.2rem"} textAlign={"center"} fontWeight={"bold"}>
+                    {status}
+                    </Typography>
+                    
+                    
+                    </Box>
+                    )}
+                
+
+                  { reorderPoint != null && (
+                     <Box style={{
+                        borderRadius: "2rem",
+                        padding: "0.5rem 1rem",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        overflow: "hidden",
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
+                    }} >
+                        <Box display={isNonMobileScreens? "flex" : "block"}>
+                        <Typography color="white" variant="subtitle1" ml={"0.3rem"}  >
+                          Reorder Point : 
+                        </Typography>
+                        <Typography ml={"0.5rem"} color={"white"} variant="h9" fontSize={isNonMobileScreens? "1.2rem" : "1rem"} textAlign={"center"} fontWeight={"bold"}>
+                          {reorderPoint}
+                      </Typography>
+                        </Box>
+                        
+                    </Box>
+                   
+               
+                  )}
+                   </Box>
                   </Box>
-                  
-                  </Box>
-              </Box>
               <Box display="flex" justifyContent="space-between" mt="1rem" gap={2}>
                   
                 
                  
-                  { role === "employee" && (
+                  { (role == "employee" || loggedInUserId == productUserId )&& (
                       <>
                       <Button 
                       size="small"
@@ -169,11 +199,8 @@
                          color="error"
                           onClick={deleteProduct}
                       > Delete Product 
-                      </Button>
-  
-                      
-                      </>
-                      
+                      </Button>                     
+                      </>   
                   )}
                   
               </Box>

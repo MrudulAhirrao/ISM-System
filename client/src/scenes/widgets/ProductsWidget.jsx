@@ -9,7 +9,7 @@ import {useMediaQuery} from "@mui/material";
 import { Box } from "@mui/material";
 import CustomPagination from "../../components/CustomPagination";
 import ProductWidget from "./ProductWidget";
-
+import Status from "../../components/Status"
 
 const ProductsWidget = ({ userId, isProfile = false  }) => {
   const dispatch = useDispatch();
@@ -19,6 +19,7 @@ const ProductsWidget = ({ userId, isProfile = false  }) => {
   const firstName = useSelector((state)=> state.user.firstName);
   const [sort, setSort] = useState(JSON.parse(localStorage.getItem("productSort")) || { sort: "quantity", order: "desc" });
   const [filterCategory, setFilterCategory] = useState(JSON.parse(localStorage.getItem("productFilterCategory")) || []);
+  const [filterStatus, setFilterStatus] = useState(JSON.parse(localStorage.getItem("productFilterStatus")) || []); 
   const [filterName, setFilterName] = useState(JSON.parse(localStorage.getItem("productFilterName")) || "");
   const [page, setPage] = useState(isProfile ? 1 : parseInt(localStorage.getItem("productPage")) || 1);
   const [search, setSearch] = useState("");
@@ -29,11 +30,13 @@ const ProductsWidget = ({ userId, isProfile = false  }) => {
   
   const clearFilters = () => {
     setFilterCategory([]); // Clear filterTheme state
+    setFilterStatus([]);
     setFilterName(""); // Optionally clear location filter as well
     setPage(1); // Reset page to 1 when filters are cleared
     localStorage.removeItem("productFilterCategory"); // Remove stored filterTheme from localStorage
     localStorage.removeItem("productFilterName"); // Optionally remove stored filterLocation as well
-    
+    localStorage.removeItem("productFilterStatus"); // Remove stored filterTheme from localStorage
+
    
   };
 
@@ -41,9 +44,10 @@ const ProductsWidget = ({ userId, isProfile = false  }) => {
     const getProducts = async () => {
       try {
         const filterCategoryString = filterCategory.join(",");
-  
+        const filterStatusString = filterStatus.join(",");
+
         const response = await fetch(
-          `http://localhost:3001/products?page=${page}&sort=${sort.sort},${sort.order}&category=${filterCategoryString}&search=${search}&name=${filterName}`, // Include location in the API request
+          `http://localhost:3001/products?page=${page}&sort=${sort.sort},${sort.order}&category=${filterCategoryString}&status=${filterStatusString}&search=${search}&name=${filterName}`, // Include location in the API request
           {
             method: "GET",
             headers: { Authorization: `Bearer ${token}` },
@@ -79,7 +83,7 @@ const ProductsWidget = ({ userId, isProfile = false  }) => {
      else {
       getProducts();
     }
-  }, [sort, filterCategory, filterName, page, search, userId, isProfile, token]);
+  }, [sort, filterCategory, filterStatus, filterName, page, search, userId, isProfile, token]);
   
 
   const handleSortChange = (newSort) => {
@@ -93,6 +97,13 @@ const ProductsWidget = ({ userId, isProfile = false  }) => {
     setPage(1); // Reset page to 1 when filter changes
     localStorage.setItem("productFilterCategory", JSON.stringify(newFilterCategory));
   };
+
+  const handleFilterStatusChange = (newFilterStatus) => {
+    setFilterStatus(newFilterStatus);
+    setPage(1); // Reset page to 1 when filter changes
+    localStorage.setItem("productFilterStatus", JSON.stringify(newFilterStatus));
+  };
+
 
   const handleFilterNameChange = (newProductName) => {
     setFilterName(newProductName);
@@ -155,6 +166,16 @@ const ProductsWidget = ({ userId, isProfile = false  }) => {
           setFilterCategory={handleFilterCategoryChange}
         />
         </Box>
+        {Role == 'employee' && (
+          <Box mt={2}>
+          <Status
+            filterStatus={filterStatus}
+            status={products.status ? products.status : []}
+            setFilterStatus={handleFilterStatusChange}
+          />
+          </Box>
+        )}
+        
         <Box mt={2}>
         { Role==="employee" ? (
            <Button variant="outlined" onClick={clearFilters}>
@@ -201,7 +222,6 @@ const ProductsWidget = ({ userId, isProfile = false  }) => {
               minQuantity, 
               reorderPoint,
               maxQuantity,
-              supplierId,
               category,
               status
             }) => (
@@ -216,7 +236,6 @@ const ProductsWidget = ({ userId, isProfile = false  }) => {
                 minQuantity={minQuantity}
                 reorderPoint={reorderPoint}
                 maxQuantity={maxQuantity}
-                supplierId={supplierId}
                 status={status}
                 category={category}
               />

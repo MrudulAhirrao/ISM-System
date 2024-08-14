@@ -38,6 +38,10 @@ const ProductSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    bookings: {
+      type: Map,
+      of: Boolean,
+    },
   },
   { timestamps: true }
 );

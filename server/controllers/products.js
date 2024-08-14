@@ -50,15 +50,20 @@ export const getFeedProducts = async (req, res) => {
     const search = req.query.search || "";
     let sort = req.query.sort || "quantity";
     let category = req.query.category || "All";
+    let status = req.query.status || "All";
     let name = req.query.name || "";
 
     // Fetch distinct themes from the database
     const categoryOptions = await Product.distinct("category");
-
+    const statusOptions = await Product.distinct("status");
     // If theme is "All", include all theme options, otherwise split the provided theme string
     category === "All"
       ? (category = [...categoryOptions])
       : (category = req.query.category.split(","));
+
+    status === "All"
+      ? (status = [...statusOptions])
+      : (status = req.query.status.split(","));
 
     // Split and parse the sort parameter
     req.query.sort ? (sort = req.query.sort.split(",")) : (sort = [sort]);
@@ -74,6 +79,9 @@ export const getFeedProducts = async (req, res) => {
       category: { $in: category },
     };
 
+    if (status) {
+      filter.status = { $in: status };
+    }
     // Add name filter if name is provided
     if (name) {
       filter.name = { $regex: name, $options: "i" };
@@ -95,6 +103,7 @@ export const getFeedProducts = async (req, res) => {
       page: page + 1,
       limit,
       category: categoryOptions,
+      status: statusOptions,
       products,
     };
 
