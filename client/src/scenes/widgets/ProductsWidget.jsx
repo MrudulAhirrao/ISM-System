@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setProducts } from "../../state";
-import {Typography, Button} from "@mui/material";
+import {Typography, Button, CircularProgress} from "@mui/material";
 import Search from "../../components/Search";
 import Sort from "../../components/Sort";
 import Category from "../../components/Category";
@@ -24,6 +24,7 @@ const ProductsWidget = ({ userId, isProfile = false , isBookedProducts=false }) 
   const [page, setPage] = useState(isProfile ? 1 : parseInt(localStorage.getItem("productPage")) || 1);
   const [search, setSearch] = useState("");
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const [loading, setLoading] = useState(true);
 
  
   
@@ -43,6 +44,7 @@ const ProductsWidget = ({ userId, isProfile = false , isBookedProducts=false }) 
   useEffect(() => {
     const getProducts = async () => {
       try {
+        setLoading(true); // Start loading
         const filterCategoryString = filterCategory.join(",");
         const filterStatusString = filterStatus.join(",");
 
@@ -57,12 +59,15 @@ const ProductsWidget = ({ userId, isProfile = false , isBookedProducts=false }) 
         const data = await response.json();
   
         dispatch(setProducts({ products: data }));
+        setLoading(false); // End loading
       } catch (error) {
         console.error("Error fetching products:", error);
+        setLoading(false); // End loading
       }
     };
   
     const getUserProducts = async () => {
+      setLoading(true); // Start loading
       const filterCategoryString = filterCategory.join(",");
       const response = await fetch(
         `http://localhost:3001/products/${userId}/products?page=${page}&sort=${sort.sort},${sort.order}&category=${filterCategoryString}&search=${search}&name=${filterName}`,
@@ -73,9 +78,12 @@ const ProductsWidget = ({ userId, isProfile = false , isBookedProducts=false }) 
       );
       const data = await response.json();
       dispatch(setProducts({ products: data }));
+      setLoading(false); // End loading
+
     };
 
     const getBookedProducts = async () => {
+      setLoading(true); // Start loading
       const filterCategoryString = filterCategory.join(",");
 
       const response = await fetch(
@@ -87,6 +95,8 @@ const ProductsWidget = ({ userId, isProfile = false , isBookedProducts=false }) 
       );
       const data = await response.json();
       dispatch(setProducts({ products: data }));
+      setLoading(false); // End loading
+
     };
 
     if (isProfile) {
@@ -134,9 +144,17 @@ const ProductsWidget = ({ userId, isProfile = false , isBookedProducts=false }) 
   };
 
   return (
+    <>
+    {loading ? (
+      <Box display="flex" justifyContent="center" alignItems="center" height="100%">
+          <CircularProgress />
+      </Box>
+  ) : (
     <Box>
+     
       {/* Filters */}
       <Box mt={3}  >
+        
         <Box display={"flex"} gap={ isNonMobile?  7 : 2}>
           <Box>
           <Sort sort={sort} setSort={handleSortChange} />
@@ -268,7 +286,10 @@ const ProductsWidget = ({ userId, isProfile = false , isBookedProducts=false }) 
     </Box>
         
       </Box>
+       
     </Box>
+    )}
+    </>
   );
 };
 

@@ -34,9 +34,9 @@ const ProductDetailWidget = ({
   const userIds = Object.keys(bookings);
   
   // Function to handle edit button click
-  const handleEditProduct = () => {
+  const payProduct = () => {
     // Redirect to edit form with event ID as URL parameter
-    navigate(`/products/${productId}/edit`);
+    navigate(`/pay`);
   };
 
 console.log(productId);
@@ -63,217 +63,282 @@ console.log(productId);
   return (
     <Box padding={"1.5rem 1.5rem 0.75rem 1.5rem"} gap={"5rem"} display={ isNonMobileScreens ? "flex" : "block"} >
     
-    <WidgetWrapper mt={"2rem"} width={isNonMobileScreens? "60%" : "100%"} >
-      <Box display={"flex"} justifyContent="center" alignItems="center" gap={isNonMobileScreens ? "2rem" : "1rem"}>
-          <Typography  fontSize={isNonMobileScreens? "3rem" : "2rem"} color= {role=='employee' ? 'primary' : "#834bff"} > Product Details </Typography>
-      </Box>
-          <Box mt={"1rem"} >
-          <Box style={{
-                    borderRadius: "2rem",
-                    padding: "0.5rem 1rem",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    overflow: "hidden",
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                }} >
-                    <Box display={isNonMobileScreens? "flex" : "block"}>
-                    <Typography color="white" variant="subtitle1" ml={"0.3rem"}  >
-                      Product Name : 
-                    </Typography>
-                    <Typography ml={"0.5rem"} color={"white"} variant="h9" fontSize={isNonMobileScreens? "1.2rem" : "1rem"} textAlign={"center"} fontWeight={"bold"}>
-                      {name}
-                  </Typography>
-                    </Box>
-            </Box>
+    <WidgetWrapper
+  mt="2rem"
+  width={isNonMobileScreens ? "60%" : "100%"}
+  p="2rem"
+  backgroundColor="#1a1a1a"
+  borderRadius="1.5rem"
+  boxShadow="0px 4px 12px rgba(0, 0, 0, 0.1)"
+>
+  <Box
+    display="flex"
+    justifyContent="center"
+    alignItems="center"
+    gap={isNonMobileScreens ? "2rem" : "1rem"}
+    mb="1rem"
+  >
+    <Typography
+      fontSize={isNonMobileScreens ? "3rem" : "2rem"}
+      color={role === "employee" ? "primary" : "#834bff"}
+      fontWeight="bold"
+    >
+      Product Details
+    </Typography>
+  </Box>
 
-            <Box style={{
-                    borderRadius: "2rem",
-                    padding: "0.5rem 1rem",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    overflow: "hidden",
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                }} >
-                    <Box display={isNonMobileScreens? "flex" : "block"}>
-                    <Typography color="white" variant="subtitle1" ml={"0.3rem"}  >
-                    Description : 
-                    </Typography>
-                    <Typography ml={"0.5rem"} color={"white"} variant="h9" fontSize={isNonMobileScreens? "1.2rem" : "1rem"} textAlign={"center"} fontWeight={"bold"}>
-                      {description}
-                  </Typography>
-                    </Box>
-            </Box>
+  <Box mt="1rem">
+    <Box
+      style={{
+        borderRadius: "2rem",
+        padding: "1rem",
+        backgroundColor: "#2a2a2a",
+        marginBottom: "1rem",
+      }}
+      display={"flex"} 
+      alignItems={"center"}
+    >
+      <Typography color="white" variant="subtitle1" ml="0.3rem">
+        Product Name:
+      </Typography>
+      <Typography
+        ml="0.5rem"
+        color="white"
+        variant="h6"
+        fontSize={isNonMobileScreens ? "1.2rem" : "1rem"}
+        fontWeight="bold"
+      >
+        {name}
+      </Typography>
+    </Box>
 
-            <Box style={{
-                    borderRadius: "2rem",
-                    padding: "0.5rem 1rem",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    overflow: "hidden",
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                }} >
-                    <Box display={isNonMobileScreens? "flex" : "block"}>
-                    <Typography color="white" variant="subtitle1" ml={"0.3rem"}  >
-                    Price: 
-                    </Typography>
-                    <Typography ml={"0.5rem"} color={"white"} variant="h9" fontSize={isNonMobileScreens? "1.2rem" : "1rem"} textAlign={"center"} fontWeight={"bold"}>
-                      {price}
-                  </Typography>
-                    </Box>
-            </Box>
+    <Box
+      style={{
+        borderRadius: "2rem",
+        padding: "1rem",
+        backgroundColor: "#2a2a2a",
+        marginBottom: "1rem",
+      }}
+      display={"flex"} 
+      alignItems={"center"}
+    >
+      <Typography color="white" variant="subtitle1" ml="0.3rem">
+        Description:
+      </Typography>
+      <Typography
+        ml="0.5rem"
+        color="white"
+        variant="h6"
+        fontSize={isNonMobileScreens ? "1.2rem" : "1rem"}
+        fontWeight="bold"
+      >
+        {description}
+      </Typography>
+    </Box>
 
-            <Box style={{
-                    borderRadius: "2rem",
-                    padding: "0.5rem 1rem",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    overflow: "hidden",
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                }} >
-                    <Box display={isNonMobileScreens? "flex" : "block"}>
-                    <Typography color="white" variant="subtitle1" ml={"0.3rem"}  >
-                    Quantity : 
-                    </Typography>
-                    <Typography ml={"0.5rem"} color={"white"} variant="h9" fontSize={isNonMobileScreens? "1.2rem" : "1rem"} textAlign={"center"} fontWeight={"bold"}>
-                      {quantity}
-                  </Typography>
-                    </Box>
-            </Box>
+    <Box
+      style={{
+        borderRadius: "2rem",
+        padding: "1rem",
+        backgroundColor: "#2a2a2a",
+        marginBottom: "1rem",
+      }}
+      display={"flex"} 
+      alignItems={"center"}
+    >
+      <Typography color="white" variant="subtitle1" ml="0.3rem">
+        Price:
+      </Typography>
+      <Typography
+        ml="0.5rem"
+        color="white"
+        variant="h6"
+        fontSize={isNonMobileScreens ? "1.2rem" : "1rem"}
+        fontWeight="bold"
+      >
+        {price}
+      </Typography>
+    </Box>
 
-           
+    <Box
+      style={{
+        borderRadius: "2rem",
+        padding: "1rem",
+        backgroundColor: "#2a2a2a",
+        marginBottom: "1rem",
+      }}
+      display={"flex"} 
+      alignItems={"center"}
+    >
+      <Typography color="white" variant="subtitle1" ml="0.3rem">
+        Quantity:
+      </Typography>
+      <Typography
+        ml="0.5rem"
+        color="white"
+        variant="h6"
+        fontSize={isNonMobileScreens ? "1.2rem" : "1rem"}
+        fontWeight="bold"
+      >
+        {quantity}
+      </Typography>
+    </Box>
 
-                { minQuantity != null && (
-                <>
+    {minQuantity != null && (
+      <>
+        <Box
+          style={{
+            borderRadius: "2rem",
+            padding: "1rem",
+            backgroundColor: "#2a2a2a",
+            marginBottom: "1rem",
+          }}
+          display={"flex"} 
+      alignItems={"center"}
+        >
+          <Typography color="white" variant="subtitle1" ml="0.3rem">
+            Minimum Quantity:
+          </Typography>
+          <Typography
+            ml="0.5rem"
+            color="white"
+            variant="h6"
+            fontSize={isNonMobileScreens ? "1.2rem" : "1rem"}
+            fontWeight="bold"
+          >
+            {minQuantity}
+          </Typography>
+        </Box>
 
-                <Box style={{
-                  borderRadius: "2rem",
-                  padding: "0.5rem 1rem",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  overflow: "hidden",
-                  whiteSpace: "nowrap",
-                  textOverflow: "ellipsis",
-                }} >
-                  <Box display={isNonMobileScreens? "flex" : "block"}>
-                  <Typography color="white" variant="subtitle1" ml={"0.3rem"}  >
-                  minQuantity : 
-                  </Typography>
-                  <Typography ml={"0.5rem"} color={"white"} variant="h9" fontSize={isNonMobileScreens? "1.2rem" : "1rem"} textAlign={"center"} fontWeight={"bold"}>
-                    {minQuantity}
-                </Typography>
-                  </Box>
-                </Box>
+        <Box
+          style={{
+            borderRadius: "2rem",
+            padding: "1rem",
+            backgroundColor: "#2a2a2a",
+            marginBottom: "1rem",
+          }}
+          display={"flex"} 
+      alignItems={"center"}
+        >
+          <Typography color="white" variant="subtitle1" ml="0.3rem">
+            Reorder Point:
+          </Typography>
+          <Typography
+            ml="0.5rem"
+            color="white"
+            variant="h6"
+            fontSize={isNonMobileScreens ? "1.2rem" : "1rem"}
+            fontWeight="bold"
+          >
+            {reorderPoint}
+          </Typography>
+        </Box>
 
-                <Box style={{
-                  borderRadius: "2rem",
-                  padding: "0.5rem 1rem",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  overflow: "hidden",
-                  whiteSpace: "nowrap",
-                  textOverflow: "ellipsis",
-                }} >
-                  <Box display={isNonMobileScreens? "flex" : "block"}>
-                  <Typography color="white" variant="subtitle1" ml={"0.3rem"}  >
-                  reorderPoint : 
-                  </Typography>
-                  <Typography ml={"0.5rem"} color={"white"} variant="h9" fontSize={isNonMobileScreens? "1.2rem" : "1rem"} textAlign={"center"} fontWeight={"bold"}>
-                    {reorderPoint}
-                </Typography>
-                  </Box>
-                </Box>
-                  <Box style={{
-                    borderRadius: "2rem",
-                    padding: "0.5rem 1rem",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    overflow: "hidden",
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                }} >
-                    <Box display={isNonMobileScreens? "flex" : "block"}>
-                    <Typography color="white" variant="subtitle1" ml={"0.3rem"}  >
-                    maxQuantity : 
-                    </Typography>
-                    <Typography ml={"0.5rem"} color={"white"} variant="h9" fontSize={isNonMobileScreens? "1.2rem" : "1rem"} textAlign={"center"} fontWeight={"bold"}>
-                      {maxQuantity}
-                  </Typography>
-                    </Box>
-                </Box>
-                </>
-                )}
-            
-            <Box style={{
-                    borderRadius: "2rem",
-                    padding: "0.5rem 1rem",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    overflow: "hidden",
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                }} >
-                    <Box display={isNonMobileScreens? "flex" : "block"}>
-                    <Typography color="white" variant="subtitle1" ml={"0.3rem"}  >
-                    category: 
-                    </Typography>
-                    <Typography ml={"0.5rem"} color={"white"} variant="h9" fontSize={isNonMobileScreens? "1.2rem" : "1rem"} textAlign={"center"} fontWeight={"bold"}>
-                      {category}
-                  </Typography>
-                    </Box>
-            </Box>
+        <Box
+          style={{
+            borderRadius: "2rem",
+            padding: "1rem",
+            backgroundColor: "#2a2a2a",
+            marginBottom: "1rem",
+          }}
+          display={"flex"} 
+      alignItems={"center"}
+        >
+          <Typography color="white" variant="subtitle1" ml="0.3rem">
+            Maximum Quantity:
+          </Typography>
+          <Typography
+            ml="0.5rem"
+            color="white"
+            variant="h6"
+            fontSize={isNonMobileScreens ? "1.2rem" : "1rem"}
+            fontWeight="bold"
+          >
+            {maxQuantity}
+          </Typography>
+        </Box>
+      </>
+    )}
 
-          </Box>
-         
-          { (role === "employee" && status == "Marketplace"
-          ) && (
-            <>
-              <FlexBetween gap="0.3rem" mt={"1rem"}>
-              <Button  onClick={patchProduct} variant={isBooked? "contained": "outlined"} color={isBooked? "error": "primary"}>
-          {isBooked ? "Cancel Product": "Order Product"}
-        </Button>
-              </FlexBetween>
-            </>  
-          )}
+    <Box
+      style={{
+        borderRadius: "2rem",
+        padding: "1rem",
+        backgroundColor: "#2a2a2a",
+        marginBottom: "1rem",
+      }}
+      display={"flex"} 
+      alignItems={"center"}
+    >
+      <Typography color="white" variant="subtitle1" ml="0.3rem">
+        Category:
+      </Typography>
+      <Typography
+        ml="0.5rem"
+        color="white"
+        variant="h6"
+        fontSize={isNonMobileScreens ? "1.2rem" : "1rem"}
+        fontWeight="bold"
+      >
+        {category}
+      </Typography>
+    </Box>
+  </Box>
 
-{ (role === "employee" && status == "Marketplace"
-          ) && (
+  {role === "employee" && status === "Marketplace" && (
+    <FlexBetween gap="0.3rem" mt="2rem">
+      <Button
+        onClick={patchProduct}
+        variant={isBooked ? "contained" : "outlined"}
+        color={isBooked ? "error" : "primary"}
+        sx={{
+          fontWeight: "bold",
+          padding: "0.8rem 2rem",
+          borderRadius: "1.5rem",
+        }}
+      >
+        {isBooked ? "Cancel Product" : "Order Product"}
+      </Button>
+      <Button
+        onClick={payProduct}
+        variant="contained"
+        color="success"
+        sx={{
+          fontWeight: "bold",
+          padding: "0.8rem 2rem",
+          borderRadius: "1.5rem",
+        }}
+      >
+        Pay
+      </Button>
+    </FlexBetween>
+  )}
 
-            <Box style={{
-              borderRadius: "2rem",
-              padding: "0.5rem 1rem",
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              overflow: "hidden",
-              whiteSpace: "nowrap",
-              textOverflow: "ellipsis",
-          }} >
-              <Box display={isNonMobileScreens? "flex" : "block"}>
-              <Typography color="white" variant="subtitle1" ml={"0.3rem"}  >
-              Orders for this Product :
-              </Typography>
-              <Typography ml={"0.5rem"} color={"white"} variant="h9" fontSize={isNonMobileScreens? "1.2rem" : "1rem"} textAlign={"center"} fontWeight={"bold"}>
-                {bookingCount}
-            </Typography>
-              </Box>
-      </Box>
+  {role === "supplier" && status === "Marketplace" && (
+    <Box
+      style={{
+        borderRadius: "2rem",
+        padding: "1rem",
+        backgroundColor: "#2a2a2a",
+        marginTop: "1.5rem",
+      }}
+    >
+      <Typography color="white" variant="subtitle1" ml="0.3rem">
+        Orders for this Product:
+      </Typography>
+      <Typography
+        ml="0.5rem"
+        color="white"
+        variant="h6"
+        fontSize={isNonMobileScreens ? "1.2rem" : "1rem"}
+        fontWeight="bold"
+      >
+        {bookingCount}
+      </Typography>
+    </Box>
+  )}
+</WidgetWrapper>
 
-           )}
-     
-
-        </WidgetWrapper>
          
         <Box>
         {role === "supplier" && (

@@ -213,7 +213,7 @@
                         </Typography>
                     </Box>
                     )}
-                  { (role == "employee" || loggedInUserId == productUserId )&& (
+                  { (loggedInUserId == productUserId )&& (
                       <>
                       <Button 
                       size="small"

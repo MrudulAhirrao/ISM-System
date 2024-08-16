@@ -5,6 +5,8 @@ import "./index.css";
 import authReducer from "./state";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
+import { Providers } from "./providers.jsx";
+import '@rainbow-me/rainbowkit/styles.css';
 import {
   persistStore,
   persistReducer,
@@ -32,11 +34,15 @@ const store = configureStore({
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  <React.StrictMode> 
     <Provider store={store}>
+   
       <PersistGate loading={null} persistor={persistStore(store)}>
-        <App />
+        <Providers>
+        <App />    
+        </Providers> 
       </PersistGate>
+     
     </Provider>
   </React.StrictMode>
 );

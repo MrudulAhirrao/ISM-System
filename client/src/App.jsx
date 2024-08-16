@@ -12,7 +12,9 @@ import ProductListing from "./scenes/ProductListingPage";
 import MyProductPage from "./scenes/myProductPage";
 import ProductDetail from "./scenes/productDetailPage";
 import EmployeeProfilePage from "./scenes/employeeprofilePage";
-
+import PaymentPage from "./scenes/paymentPage";
+import PredictionPage from "./scenes/predictionsPage";
+import DeletePage from "./scenes/deletePage";
 function App() {
   const mode = useSelector((state) => state.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
@@ -44,6 +46,19 @@ function App() {
            <Route
             path="/products/:productId/product"
             element={isAuth ? <ProductDetail></ProductDetail> : <Navigate to="/" />}
+          ></Route>
+
+        <Route
+            path="/pay"
+            element={isAuth ? <PaymentPage></PaymentPage> : <Navigate to="/" />}
+          ></Route>
+          <Route
+            path="/prediction"
+            element={isAuth ? <PredictionPage></PredictionPage> : <Navigate to="/" />}
+          ></Route>
+          <Route
+            path="/delete"
+            element={isAuth ? <DeletePage></DeletePage> : <Navigate to="/" />}
           ></Route>
 
         </Routes>

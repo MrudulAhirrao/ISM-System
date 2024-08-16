@@ -59,6 +59,7 @@ const HomePage = () => {
             flexBasis={isNonMobileScreens ? "42%" : undefined}
             mt={isNonMobileScreens ? undefined : "2rem"}
             >
+              <Box  display='flex' gap={5}>
               <Link to="/myproduct" >
         <Button 
          variant="outlined"
@@ -69,6 +70,18 @@ const HomePage = () => {
           Add Product 
         </Button>
       </Link>
+      <Link to="/prediction" >
+        <Button 
+         variant="contained"
+         size="large"
+         color='primary'
+         // Adjust size here
+        >
+          Sales Prediction
+        </Button>
+      </Link>
+              </Box>
+              
             <ProductsWidget userId={_id} ></ProductsWidget>
             </Box>
           )}
