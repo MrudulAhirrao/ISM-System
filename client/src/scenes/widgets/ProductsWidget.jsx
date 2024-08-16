@@ -49,7 +49,7 @@ const ProductsWidget = ({ userId, isProfile = false , isBookedProducts=false }) 
         const filterStatusString = filterStatus.join(",");
 
         const response = await fetch(
-          `http://localhost:3001/products?page=${page}&sort=${sort.sort},${sort.order}&category=${filterCategoryString}&status=${filterStatusString}&search=${search}&name=${filterName}`, // Include location in the API request
+          `https://intelligent-supplychain-management.onrender.com/products?page=${page}&sort=${sort.sort},${sort.order}&category=${filterCategoryString}&status=${filterStatusString}&search=${search}&name=${filterName}`, // Include location in the API request
           {
             method: "GET",
             headers: { Authorization: `Bearer ${token}` },
@@ -70,7 +70,7 @@ const ProductsWidget = ({ userId, isProfile = false , isBookedProducts=false }) 
       setLoading(true); // Start loading
       const filterCategoryString = filterCategory.join(",");
       const response = await fetch(
-        `http://localhost:3001/products/${userId}/products?page=${page}&sort=${sort.sort},${sort.order}&category=${filterCategoryString}&search=${search}&name=${filterName}`,
+        `https://intelligent-supplychain-management.onrender.com/products/${userId}/products?page=${page}&sort=${sort.sort},${sort.order}&category=${filterCategoryString}&search=${search}&name=${filterName}`,
         {
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },
@@ -87,7 +87,7 @@ const ProductsWidget = ({ userId, isProfile = false , isBookedProducts=false }) 
       const filterCategoryString = filterCategory.join(",");
 
       const response = await fetch(
-        `http://localhost:3001/products/${userId}/bookedproducts?page=${page}&sort=${sort.sort},${sort.order}&category=${filterCategoryString}&search=${search}&name=${filterName}`,
+        `https://intelligent-supplychain-management.onrender.com/products/${userId}/bookedproducts?page=${page}&sort=${sort.sort},${sort.order}&category=${filterCategoryString}&search=${search}&name=${filterName}`,
         {
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },

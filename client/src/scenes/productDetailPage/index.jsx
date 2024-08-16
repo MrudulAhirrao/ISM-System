@@ -16,7 +16,7 @@ const ProductDetail = () => {
   const currentProduct = products.find((product) => product._id === productId);
 
   const getProduct = async () => {
-    const response = await fetch(`http://localhost:3001/products/${productId}/product`, {
+    const response = await fetch(`https://intelligent-supplychain-management.onrender.com/products/${productId}/product`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });

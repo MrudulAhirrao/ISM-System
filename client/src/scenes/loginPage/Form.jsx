@@ -117,7 +117,7 @@ const Form = () => {
     formData.append("picturePath", values.picture.name);
 
     const savedUserResponse = await fetch(
-      "http://localhost:3001/auth/register",
+      "https://intelligent-supplychain-management.onrender.com/auth/register",
       {
         method: "POST",
         body: formData,
@@ -135,7 +135,7 @@ const Form = () => {
   };
 
   const login = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch("http://localhost:3001/auth/login", {
+    const loggedInResponse = await fetch("https://intelligent-supplychain-management.onrender.com/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
@@ -156,7 +156,7 @@ const Form = () => {
  
   const VerifyEmail = async (values, onSubmitProps) => {
     try {
-      const response = await fetch("http://localhost:3001/auth/verify-email", {
+      const response = await fetch("https://intelligent-supplychain-management.onrender.com/auth/verify-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
@@ -176,7 +176,7 @@ const Form = () => {
     }
   };
   const resetPasswordSecurity = async (values, onSubmitProps) => {
-    const response = await fetch("http://localhost:3001/auth/reset-password-security", {
+    const response = await fetch("https://intelligent-supplychain-management.onrender.com/auth/reset-password-security", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),

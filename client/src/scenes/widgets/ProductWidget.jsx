@@ -34,7 +34,7 @@
       
   
       const deleteProduct = async () => {
-          const response = await fetch(`http://localhost:3001/products/${productUserId}/${productId}/delete`, {
+          const response = await fetch(`https://intelligent-supplychain-management.onrender.com/products/${productUserId}/${productId}/delete`, {
             method: "DELETE",
             headers: {
               Authorization: `Bearer ${token}`,

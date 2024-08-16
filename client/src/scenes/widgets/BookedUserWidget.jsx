@@ -35,7 +35,7 @@ import {
     const main = palette.neutral.main;
   
     const getUser = async () => {
-      const response = await fetch(`http://localhost:3001/users/${userId}`, {
+      const response = await fetch(`https://intelligent-supplychain-management.onrender.com/users/${userId}`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -58,7 +58,7 @@ import {
     const handleSave = async () => {
       // Send updated user details to backend for saving
       try {
-        await fetch(`http://localhost:3001/users/${userId}`, {
+        await fetch(`https://intelligent-supplychain-management.onrender.com/users/${userId}`, {
           method: "PATCH", // Use PATCH method for partial updates
           headers: {
             "Content-Type": "application/json",

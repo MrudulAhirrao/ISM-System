@@ -67,7 +67,7 @@ const MyProductWidget = ({picturePath}) => {
       formData.append("status", status);
       formData.append("category", category);
   
-      const response = await fetch(`http://localhost:3001/products`, {
+      const response = await fetch(`https://intelligent-supplychain-management.onrender.com/products`, {
           method: "POST",
           headers: { Authorization: `Bearer ${token}` }, // Ensure token is valid
           body: formData

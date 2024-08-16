@@ -41,7 +41,7 @@ const ProductDetailWidget = ({
 
 console.log(productId);
   const patchProduct = async () => {
-    const response = await fetch(`http://localhost:3001/products/${productId}/booking`, {
+    const response = await fetch(`https://intelligent-supplychain-management.onrender.com/products/${productId}/booking`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
