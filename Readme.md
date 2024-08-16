@@ -33,8 +33,8 @@ Warehouse is an innovative supply chain management system developed during a hac
 - Solidity: Smart contract development
 - Foundry: Smart contract development and testing framework
 - Wagmi: React hooks for Ethereum
--WalletConnect : For connecting wallet
--Alchemy - Node provider 
+- WalletConnect : For connecting wallet
+- Alchemy - Node provider 
 
 ### Machine Learning
 - Flask: Web framework for ML model deployment
