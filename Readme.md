@@ -42,3 +42,9 @@ Warehouse is an innovative supply chain management system developed during a hac
 - Scikit-learn: Machine learning library
 - Pandas: Data manipulation and analysis
 - Jupyter Notebook: Interactive development environment
+
+### Testing
+- Supplier Account: email-888innovations888@gmail.com password-1234
+- Employee account: email-akhil888binoy@gmail.com password-1234
+- Link : https://intelligent-supplychain-management-ndy1.onrender.com/
+
